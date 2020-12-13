@@ -19,3 +19,4 @@ rootProject.name = "jwt"
 
 include(":jwt-core")
 include(":jwt-hs")
+include(":jwt-rs")

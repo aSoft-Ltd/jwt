@@ -26,3 +26,8 @@ kotlin {
         }
     }
 }
+
+aSoftLibrary(
+    version = vers.asoft.jwt,
+    description = "A Platform agnostic way of dealing with JWT tokens signed with the HMAC algorithms"
+)

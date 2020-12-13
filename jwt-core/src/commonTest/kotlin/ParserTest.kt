@@ -31,10 +31,9 @@ class ParserTest {
     @Test
     fun can_parse_a_known_token() {
         val token =
-            "eyJhbGciOiJUU1RBTEciLCJ0eXAiOiJKV1QiLCJraWQiOjB9.eyJ1aWQiOjAsImNsYWltcyI6WyJtZSIsIm15c2VsZiIsImkiXSwiaWF0IjpudWxsLCJleHAiOm51bGx9.ZXlKaGJHY2lPaUpVVTFSQlRFY2lMQ0owZVhBaU9pSktWMVFpTENKcmFXUWlPakI5LmV5SjFhV1FpT2pBc0ltTnNZV2x0Y3lJNld5SnRaU0lzSW0xNWMyVnNaaUlzSW1raVhTd2lhV0YwSWpwdWRXeHNMQ0psZUhBaU9tNTFiR3g5LmRHVnpkR3RsZVE"
+            "eyJhbGciOiJUU1RBTEciLCJ0eXAiOiJKV1QiLCJraWQiOiIwIn0.eyJ1aWQiOjAsImNsYWltcyI6WyJtZSIsIm15c2VsZiIsImkiXX0.ZXlKaGJHY2lPaUpVVTFSQlRFY2lMQ0owZVhBaU9pSktWMVFpTENKcmFXUWlPakI5LmV5SjFhV1FpT2pBc0ltTnNZV2x0Y3lJNld5SnRaU0lzSW0xNWMyVnNaaUlzSW1raVhTd2lhV0YwSWpwdWRXeHNMQ0psZUhBaU9tNTFiR3g5LmRHVnpkR3RsZVE"
         val jwt = JWT.parse(token)
         assertEquals(algName, jwt.header.alg)
-//        assertEquals(JWTVerification.Valid, jwt.verifyTSTALG(key))
         assertEquals(token, jwt.token())
     }
 
