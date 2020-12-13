@@ -1,0 +1,43 @@
+name: Publish
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  ASOFT_MAVEN_PGP_PRIVATE_KEY: ${{ secrets.ASOFT_MAVEN_PGP_PRIVATE_KEY }}
+  ASOFT_MAVEN_PGP_PASSWORD: ${{ secrets.ASOFT_MAVEN_PGP_PASSWORD }}
+  ASOFT_NEXUS_PASSWORD: ${{ secrets.ASOFT_NEXUS_PASSWORD }}
+  ASOFT_NEXUS_USERNAME: ${{ secrets.ASOFT_NEXUS_USERNAME }}
+
+jobs:
+  deploy-library:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Cache Gradle
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Making gradlew executable
+        run: chmod +x ./gradlew
+        working-directory: .
+      - name: Publishing jwt-core
+        run: ./gradlew :jwt-core:publish
+        working-directory: .
+      - name: Publishing jwt-hs
+        run: ./gradlew :jwt-hs:publish
+        working-directory: .
+      - name: Publishing jwt-rs
+        run: ./gradlew :jwt-rs:publish
+        working-directory: .
+      - name: Closing and Releasing Repositories
+        run: ./gradlew :jwt-core:closeAndReleaseRepository
+        working-directory: .
