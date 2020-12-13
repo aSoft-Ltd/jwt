@@ -1,12 +1,12 @@
 import tz.co.asoft.*
-import tz.co.asoft.test.asyncTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class HS256AlgorithmTest {
 
     @Test
-    fun `should create a jwt with HS256 algorithm`() = asyncTest {
+    fun should_create_a_jwt_with_HS256_algorithm() = asyncTest {
         val alg1 = HS256Algorithm("wakubwawenu")
         val jwt = alg1.createJWT {
             uid = "55"
@@ -21,20 +21,24 @@ class HS256AlgorithmTest {
     }
 
     @Test
-    fun `should verify without having algorithm instance`() {
+    fun should_verify_without_having_algorithm_instance() {
         val token1 =
-            """eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6MjJ9.eyJ1aWQiOjU1LCJhaWQiOjU1LCJhY2NvdW50TmFtZSI6ImFuZGVyc29uIiwidXNlck5hbWUiOiJhbmRlcnNvbiJ9.GSSXToX_ce6F9fMX68NrDJSpJeNqV66DwCTFYesvq8g"""
+            """eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjAifQ.eyJ1aWQiOiI1NSIsImFpZCI6IjU1IiwiYWNjb3VudE5hbWUiOiJhbmRlcnNvbiIsInVzZXJOYW1lIjoiYW5kZXJzb24iLCJpYXQiOjE2MDc4MzkwMjM1MzAsImV4cCI6MTYwNzkyNTQyMzUzMH0.DnwbeGo3u26UsXrRpGSqKLpRHLtWdDQ5S3xwJvvk2FY"""
         val jwt1 = JWT.parse(token1)
+        assertEquals(token1, jwt1.token())
         assertEquals("HS256", jwt1.header.alg)
         val key1 = SecurityKey(uid = "1", value = "secret")
-        assertEquals(JWTVerification.Invalid, jwt1.verifyHS256(key1))
+        assertTrue(jwt1.verifyHS256(key1) is JWTVerification.Invalid)
         val key2 = SecurityKey(uid = "2", value = "wakubwawenu")
-        assertEquals(JWTVerification.Valid, jwt1.verifyHS256(key2))
-
+        assertTrue(jwt1.verifyHS256(key2) is JWTVerification.Valid, "Token $token1 ain't valid invalid")
         val token2 =
-            """eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6MjJ9.eyJ1aWQiOjU1LCJhaWQiOjU1LCJhY2NvdW50TmFtZSI6ImFuZGVyc29uIiwidXNlck5hbWUiOiJBbmRlcnNvbiJ9.GSSXToX_ce6F9fMX68NrDJSpJeNqV66DwCTFYesvq8g"""
+            """eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjAifQ.eyJ1aWQiOiI1NSIsImFpZCI6IjU1IiwiYWNjb3VudE5hbWUiOiJhbmRlcnNvbiIsInVzZXJOYW1lIjoiYW5kZXJzb24iLCJpYXQiOjE2MDc4MzY4NzIyMzQsImV4cCI6MTYwNzkyMzI3MjIzNH0._UcEFyvNnnhGEVJeuivFPYK1znLSf5sjHFbGNrFmrhd"""
         val jwt2 = JWT.parse(token2)
         println(jwt2.payload)
-        assertEquals(JWTVerification.Invalid, jwt2.verifyHS256(key2))
+        assertTrue(jwt2.verifyHS256(key2) is JWTVerification.Invalid, "Token is invalid")
+    }
+
+    inline fun <reified T> assertIs(obj: Any, message: String? = null) {
+        if (obj !is T) throw AssertionError("$message: Expected $obj to be of instance ${T::class.simpleName}")
     }
 }

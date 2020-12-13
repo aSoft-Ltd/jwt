@@ -16,8 +16,7 @@ data class JWT(
             val header = Base64.decode(h).ascii
             val payload = Base64.decode(p).ascii
             return JWT(
-                header = Mapper.decodeFromString(header).mapValues { (_, it) -> it.toString() }
-                    .toMutableMap(),
+                header = Mapper.decodeFromString(header).mapValues { (_, v) -> v.toString() }.toMutableMap(),
                 payload = Mapper.decodeFromString(payload).toMutableMap(),
                 signature = signature
             )

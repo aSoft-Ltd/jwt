@@ -24,8 +24,13 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                api(asoft("test",vers.asoft.test))
+                api(asoft("test", vers.asoft.test))
             }
         }
     }
 }
+
+aSoftLibrary(
+    version = vers.asoft.jwt,
+    description = "A Platform agnostic way of dealing with JWT tokens"
+)

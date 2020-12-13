@@ -1,5 +1,6 @@
 package tz.co.asoft
 
-enum class JWTVerification {
-    Valid, Invalid
+sealed class JWTVerification {
+    class Invalid(val jwtSignature: String?, val computedSecret: String?) : JWTVerification()
+    class Valid(val jwt: JWT) : JWTVerification()
 }
