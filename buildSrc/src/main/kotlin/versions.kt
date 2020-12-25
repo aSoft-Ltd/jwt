@@ -7,7 +7,7 @@ object vers {
         val jwt = "0.0.2"
         val builders = "1.2.0"
         val krypto = "0.0.4"
-        val mappers = "0.0.3"
+        val mappers = "0.0.5"
         val test = "1.0.1"
     }
 
