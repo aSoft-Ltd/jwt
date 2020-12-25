@@ -6,9 +6,9 @@ package tz.co.asoft
 import kotlinx.serialization.UseSerializers
 import kotlinx.serialization.builtins.LongAsStringSerializer
 
-typealias JWTPayload = MutableMap<String, Any>
+typealias JWTPayload = MutableMap<String, Any?>
 
-fun JWTPayload(builder: JWTPayload.() -> Unit): JWTPayload = mutableMapOf<String, Any>().apply(builder)
+fun JWTPayload(builder: JWTPayload.() -> Unit): JWTPayload = mutableMapOf<String, Any?>().apply(builder)
 
 var JWTPayload.iat: Long
     set(value) {

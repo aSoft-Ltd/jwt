@@ -6,10 +6,6 @@ plugins {
     signing
 }
 
-repositories {
-    maven(url = "https://kotlin.bintray.com/kotlinx/")
-}
-
 kotlin {
     universalLib()
     sourceSets {
@@ -27,7 +23,7 @@ kotlin {
     }
 }
 
-aSoftLibrary(
+aSoftOSSLibrary(
     version = vers.asoft.jwt,
     description = "A Platform agnostic way of dealing with JWT tokens signed with the HMAC algorithms"
 )
