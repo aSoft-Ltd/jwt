@@ -1,17 +1,12 @@
 plugins {
-    id("com.android.library")
     kotlin("multiplatform")
     id("tz.co.asoft.library")
     id("io.codearte.nexus-staging")
     signing
 }
 
-repositories {
-    maven(url = "https://kotlin.bintray.com/kotlinx/")
-}
-
 kotlin {
-    universalLib()
+    multiplatformLib()
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -24,13 +19,13 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                api(asoft("test", vers.asoft.test))
+                api(asoft("test-coroutines", vers.asoft.test))
             }
         }
     }
 }
 
-aSoftLibrary(
+aSoftOSSLibrary(
     version = vers.asoft.jwt,
     description = "A Platform agnostic way of dealing with JWT tokens"
 )
