@@ -46,4 +46,19 @@ class RS512AlgorithmTest {
         assertNotEquals(token1, token2)
         assertTrue(jwt2.verifyRS512(key1) is Invalid, "jwt2 is valid after all")
     }
+
+    @Test
+    fun `should verify with verifier`() {
+        val token1 =
+            "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCIsImtpZCI6IjAifQ.eyJ1aWQiOiI1NSIsImFpZCI6IjU1IiwiYWNjb3VudE5hbWUiOiJhbmRlcnNvbiIsInVzZXJOYW1lIjoiYW5kZXJzb24iLCJpYXQiOjE2MDc4NTI0OTcyNDYsImV4cCI6MTYwNzkzODg5NzI0Nn0.g4NfXkZ+9FdWu4B9yoovTTfnf0VaE1NtQgpk2zZzun95/8VqbCKf5EwuVlUkYu+zxQsXYow7rU410A/2j0OqF3MPvXQ9LJdkuZCclBOT9tZi9B8kU49PUoCFG2TvKjjf+tRov/RUaloQREHkKUrjJ9U8b+RmLyObyM+QhfmOtPc="
+        val jwt1 = JWT.parse(token1)
+        val verifier1 = RS512Verifier(SecurityKey(uid = "0", value = publicKey))
+        assertTrue(verifier1.verify(jwt1) is Valid, "jwt1 is not valid")
+
+        val token2 =
+            "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCIsImtpZCI6IjAifQ.eyJ1aWQiOiI1NSIsImFpZCI6IjU1IiwiYWNjb3VudE5hcWUiOiJhbmRlcnNvbiIsInVzZXJOYW1lIjoiYW5kZXJzb24iLCJpYXQiOjE2MDc4NTI0OTcyNDYsImV4cCI6MTYwNzkzODg5NzI0Nn0.g4NfXkZ+9FdWu4B9yoovTTfnf0VaE1NtQgpk2zZzun95/8VqbCKf5EwuVlUkYu+zxQsXYow7rU410A/2j0OqF3MPvXQ9LJdkuZCclBOT9tZi9B8kU49PUoCFG2TvKjjf+tRov/RUaloQREHkKUrjJ9U8b+RmLyObyM+QhfmOtPd="
+        val jwt2 = JWT.parse(token2)
+        assertNotEquals(token1, token2)
+        assertTrue(verifier1.verify(jwt2) is Invalid, "jwt2 is valid after all")
+    }
 }

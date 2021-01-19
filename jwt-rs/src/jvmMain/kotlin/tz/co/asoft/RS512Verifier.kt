@@ -1,16 +1,10 @@
 package tz.co.asoft
 
-import java.security.Signature
+import java.security.interfaces.RSAPublicKey
 
-fun JWT.verifyRS512(key: SecurityKey): JWTVerification {
-    val publicKey = key.toRSAPublicKey()
-    val signature = this.signature ?: return JWTVerification.Invalid(null, null)
-    val sig = Signature.getInstance(RS512Algorithm.ALGO_NAME)
-    sig.initVerify(publicKey)
-    sig.update(message)
-    return if (sig.verify(Base64.decode(signature))) {
-        JWTVerification.Valid(this)
-    } else {
-        JWTVerification.Invalid(signature, null)
-    }
+class RS512Verifier(private val publicKey: RSAPublicKey) : JWTVerifier {
+    constructor(key: SecurityKey) : this(key.toRSAPublicKey())
+    constructor(key: String) : this(SecurityKey(value = key))
+
+    override fun verify(jwt: JWT): JWTVerification = jwt.verifyRS512(publicKey)
 }

@@ -19,7 +19,7 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                api(asoft("test-core", vers.asoft.test))
+                api(asoft("test-coroutines", vers.asoft.test))
             }
         }
     }
