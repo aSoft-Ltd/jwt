@@ -3,7 +3,7 @@ object vers {
     val nexus_staging = "0.22.0"
 
     object asoft {
-        val jwt = "0.0.30"
+        val jwt = "0.0.40"
         val builders = "1.3.0"
         val krypto = "0.0.4"
         val mappers = "0.0.5"
