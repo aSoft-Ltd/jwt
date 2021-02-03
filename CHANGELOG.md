@@ -1,3 +1,7 @@
+# 0.0.40 : 2021.01.03
+- Updated claims to match value claims
+- Updated to gradle 6.8.1
+
 # 0.0.30 : 2021.01.19
 - Removed agp from versions in buildSrc
 - Updated builders from 1.2.0 to 1.3.0

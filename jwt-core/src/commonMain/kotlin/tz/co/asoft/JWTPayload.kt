@@ -101,11 +101,11 @@ val JWTPayload.claimIdOrNull
         null
     }
 
-var JWTPayload.claims: List<String>
+var JWTPayload.claims: Map<String,List<String>>
     set(value) {
         put("claims", value)
     }
-    get() = (get("claims") as? List<String>) ?: error("claims not found in payload")
+    get() = (get("claims") as? Map<String, List<String>>) ?: error("claims not found in payload")
 
 val JWTPayload.claimsOrNull
     get() = try {
